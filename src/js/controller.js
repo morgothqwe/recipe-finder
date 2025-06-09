@@ -1,5 +1,5 @@
-import * as view from "./view";
-import model from "./model";
+import * as model from "./model";
+import view from "./view";
 
 const init = function () {
   try {

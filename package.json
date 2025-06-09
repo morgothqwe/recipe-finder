@@ -2,12 +2,21 @@
   "name": "recipe-finder",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://github.com/morgothqwe/recipe-finder#readme",
+  "bugs": {
+    "url": "https://github.com/morgothqwe/recipe-finder/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morgothqwe/recipe-finder.git"
+  },
   "license": "ISC",
   "author": "keiwan",
-  "type": "commonjs",
-  "main": "index.js",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html --dist-dir ./dist"
+  },
+  "devDependencies": {
+    "parcel": "^2.15.2"
   }
 }
