@@ -15,4 +15,91 @@ body {
   font-family: "Cormorant Garamond", sans-serif;
   line-height: 1;
   font-weight: 300;
+  margin: 3.2rem 8.6rem;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 6.4rem 1fr;
+  row-gap: 2.4rem;
+}
+
+li {
+  list-style: none;
+}
+
+/* HEADER */
+
+.foodsie--header {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  align-items: center;
+}
+
+.foodsie--list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+}
+
+.foodsie--results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.foodsie--results span:first-child {
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+
+.foodsie--results span:last-child {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.foodsie--bookmark {
+  font-size: 2.4rem;
+}
+
+.foodsie--item--search {
+  grid-column: auto / -1;
+}
+
+.foodsie--search {
+  width: 20rem;
+  height: 2.4rem;
+  padding: 1rem;
+  border-radius: 10px;
+  border: none;
+  background-color: #ffcf4c;
+  color: #000;
+}
+
+.foodsie--search:focus {
+  outline-color: #ffbe3d;
+}
+
+/* MAIN */
+
+.foodsie--main {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 3.2rem;
+}
+
+.foodsie--img {
+  width: 18rem;
+  height: 18rem;
+}
+
+.foodsie--card {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  gap: 1.2rem;
+  padding: 1.8rem;
+  background-color: #ececec;
+  border-radius: 10px;
 }
