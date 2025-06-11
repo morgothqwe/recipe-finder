@@ -98,6 +98,7 @@ li {
   display: flex;
   flex-direction: column;
   justify-self: center;
+  flex-wrap: wrap;
   gap: 1.2rem;
   padding: 1.8rem;
   background-color: #ececec;
@@ -117,4 +118,5 @@ li {
   width: 2.4rem;
   height: 2.4rem;
   background-color: red;
+  border-radius: 50%;
 }
