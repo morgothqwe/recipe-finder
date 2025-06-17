@@ -16,10 +16,15 @@ class View {
   }
 
   _generateCardMarkup(el) {
+    // Use regular icon if its not bookmarked.
+    // Use fill icon if its bookmarked.
     return `
     <div class="foodsie--card" data-id="${el.recipe_id}">
+      
       <div class="foodsie--card--img">
-        <span class="foodsie--bookmark"></span>
+        <span class="foodsie--bookmark">
+          <i class="ph-fill ph-bookmark-simple foodsie--bookmark"></i>
+        </span>
         <img src="${el.image_url}" alt="${el.title}" class="foodsie--img" />
       </div>
       <div class="foodsie--name">${el.title}</div>
