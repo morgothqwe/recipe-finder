@@ -1,14 +1,10 @@
 import * as model from "./model";
 import view from "./view";
 
-console.log("controller.js loaded, model:", model); // Debug: Confirm model import
-
 const controlNewRecipe = async function (recipe) {
   try {
-    console.log("controlNewRecipe, model.state:", model.state); // Debug
     const newRecipe = await model.searchRecipe(recipe);
     if (!model.state || !model.state.pagination) {
-      console.error("model.state or model.state.pagination is undefined");
       return;
     }
     const paginatedRecipes = model.getPaginatedRecipes();
@@ -18,15 +14,13 @@ const controlNewRecipe = async function (recipe) {
       model.getTotalPages()
     );
   } catch (err) {
-    console.error("Error in controlNewRecipe:", err.message);
+    console.error("Error:", err.message);
   }
 };
 
 const controlBookmark = function ({ recipeId, bookmarkElement }) {
   try {
-    console.log("controlBookmark, model.state:", model.state); // Debug
     if (!model.state) {
-      console.error("model.state is undefined");
       return;
     }
 
@@ -43,15 +37,13 @@ const controlBookmark = function ({ recipeId, bookmarkElement }) {
       }
     }
   } catch (err) {
-    console.error("Error in controlBookmark:", err.message);
+    console.error("Error:", err.message);
   }
 };
 
 const controlPagination = function (page) {
   try {
-    console.log("controlPagination, model.state:", model.state); // Debug
     if (!model.state || !model.state.pagination) {
-      console.error("model.state or model.state.pagination is undefined");
       return;
     }
     if (model.setCurrentPage(page)) {
@@ -63,7 +55,7 @@ const controlPagination = function (page) {
       );
     }
   } catch (err) {
-    console.error("Error in controlPagination:", err.message);
+    console.error("Error", err.message);
   }
 };
 
