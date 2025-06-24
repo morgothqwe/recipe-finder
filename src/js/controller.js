@@ -14,7 +14,7 @@ const controlNewRecipe = async function (recipe) {
       model.getTotalPages()
     );
   } catch (err) {
-    console.error("Error:", err.message);
+    console.error("Error", err.message);
   }
 };
 
@@ -37,7 +37,7 @@ const controlBookmark = function ({ recipeId, bookmarkElement }) {
       }
     }
   } catch (err) {
-    console.error("Error:", err.message);
+    console.error("Error", err.message);
   }
 };
 

@@ -67,3 +67,5 @@ export const setCurrentPage = function (page) {
   state.pagination.currentPage = page;
   return true;
 };
+
+export { state }; // Export for debugging (remove after confirming fix)
