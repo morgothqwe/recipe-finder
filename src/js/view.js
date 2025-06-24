@@ -1,6 +1,7 @@
 class View {
   _parentEl = document.querySelector(".foodsie--main");
   _searchBox = document.querySelector(".foodsie--search");
+  _paginationEl = document.querySelector(".foodsie--pagination");
 
   addHandlerFindFood(handler) {
     this._searchBox.addEventListener("keypress", (e) => {
@@ -29,6 +30,15 @@ class View {
     });
   }
 
+  addHandlerPagination(handler) {
+    this._paginationEl.addEventListener("click", (e) => {
+      const btn = e.target.closest(".pagination-btn");
+      if (!btn) return;
+      const page = parseInt(btn.dataset.page, 10);
+      handler(page);
+    });
+  }
+
   _generateCardMarkup(el) {
     return `
       <div class="foodsie--card" data-id="${el.recipe_id}">
@@ -47,15 +57,58 @@ class View {
     `;
   }
 
-  renderFood(recipe) {
+  renderFood(recipes, totalRecipes) {
     this._parentEl.innerHTML = "";
 
     document.querySelector(
       ".foodsie--found"
-    ).textContent = `${recipe.length} recipes found`;
+    ).textContent = `${totalRecipes} recipes found`;
 
-    const markup = recipe.map((el) => this._generateCardMarkup(el)).join("");
+    const markup = recipes.map((el) => this._generateCardMarkup(el)).join("");
     this._parentEl.insertAdjacentHTML("beforeend", markup);
+  }
+
+  renderPagination(currentPage, totalPages) {
+    if (!this._paginationEl) return;
+
+    let markup = "";
+    if (totalPages <= 1) {
+      this._paginationEl.innerHTML = "";
+      return;
+    }
+
+    // Previous button
+    markup += `
+      <button class="pagination-btn" data-page="${currentPage - 1}" ${
+      currentPage === 1 ? "disabled" : ""
+    }>
+        Previous
+      </button>
+    `;
+
+    // Page numbers (show limited range, e.g., current ± 2)
+    const startPage = Math.max(1, currentPage - 2);
+    const endPage = Math.min(totalPages, currentPage + 2);
+    for (let i = startPage; i <= endPage; i++) {
+      markup += `
+        <button class="pagination-btn ${
+          i === currentPage ? "active" : ""
+        }" data-page="${i}">
+          ${i}
+        </button>
+      `;
+    }
+
+    // Next button
+    markup += `
+      <button class="pagination-btn" data-page="${currentPage + 1}" ${
+      currentPage === totalPages ? "disabled" : ""
+    }>
+        Next
+      </button>
+    `;
+
+    this._paginationEl.innerHTML = markup;
   }
 
   renderBookmark({ recipeId, bookmarkElement, isBookmarked }) {

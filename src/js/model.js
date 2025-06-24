@@ -1,6 +1,12 @@
+console.log("model.js loaded"); // Debug: Confirm module loading
+
 const state = {
   recipe: [],
   bookmarks: [],
+  pagination: {
+    currentPage: 1,
+    itemsPerPage: 8,
+  },
 };
 
 export const searchRecipe = async function (recipeName) {
@@ -23,10 +29,12 @@ export const searchRecipe = async function (recipeName) {
         isBookmarked: state.bookmarks.includes(recipe_id),
       })
     );
-    state.recipe = recipe || []; // Ensure state.recipe is always an array
+    state.recipe = recipe || [];
+    state.pagination.currentPage = 1;
     return recipe;
   } catch (err) {
-    state.recipe = []; // Reset to empty array on error
+    state.recipe = [];
+    state.pagination.currentPage = 1;
     throw new Error(`Failed to fetch recipes: ${err.message}`);
   }
 };
@@ -42,4 +50,24 @@ export const toggleBookmark = function (recipeId) {
   }
 };
 
-export { state }; // Export state explicitly for debugging (optional, can remove later)
+export const getPaginatedRecipes = function () {
+  if (!state.pagination) return [];
+  const { currentPage, itemsPerPage } = state.pagination;
+  const start = (currentPage - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return state.recipe.slice(start, end);
+};
+
+export const getTotalPages = function () {
+  if (!state.pagination) return 0;
+  return Math.ceil(state.recipe.length / state.pagination.itemsPerPage);
+};
+
+export const setCurrentPage = function (page) {
+  if (!state.pagination) return false;
+  if (page < 1 || page > getTotalPages()) return false;
+  state.pagination.currentPage = page;
+  return true;
+};
+
+export { state }; // Export for debugging (remove after confirming fix)

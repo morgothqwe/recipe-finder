@@ -19,7 +19,7 @@ body {
 
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 6.4rem 1fr;
+  grid-template-rows: 6.4rem 1fr auto; /* Added auto for pagination */
   row-gap: 2.4rem;
 }
 
@@ -28,7 +28,6 @@ li {
 }
 
 /* HEADER */
-
 .foodsie--header {
   display: grid;
   grid-template-columns: 1fr;
@@ -81,7 +80,6 @@ li {
 }
 
 /* MAIN */
-
 .foodsie--main {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -114,8 +112,41 @@ li {
 .foodsie--bookmark {
   position: absolute;
   font-size: 4.8rem;
-  /* color: #ececea; */
   right: 0.2rem;
   top: 0.4rem;
   cursor: pointer;
+}
+
+/* PAGINATION */
+.foodsie--pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+.pagination-btn {
+  padding: 0.8rem 1.6rem;
+  font-size: 1.6rem;
+  font-family: "Cormorant Garamond", sans-serif;
+  background-color: #ffcf4c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #ffbe3d;
+}
+
+.pagination-btn:disabled {
+  background-color: #ececea;
+  cursor: not-allowed;
+}
+
+.pagination-btn.active {
+  background-color: #ee3333;
+  color: #fff;
+  font-weight: 600;
 }
