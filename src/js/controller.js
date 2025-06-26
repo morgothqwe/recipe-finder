@@ -4,15 +4,12 @@ import view from "./view";
 const controlNewRecipe = async function (recipe) {
   try {
     const newRecipe = await model.searchRecipe(recipe);
-    if (!model.state || !model.state.pagination) {
+    if (!newRecipe || newRecipe.length === 0) {
       return;
     }
     const paginatedRecipes = model.getPaginatedRecipes();
     view.renderFood(paginatedRecipes, newRecipe.length);
-    view.renderPagination(
-      model.state.pagination.currentPage,
-      model.getTotalPages()
-    );
+    view.renderPagination(model.getCurrentPage(), model.getTotalPages());
   } catch (err) {
     console.error("Error", err.message);
   }
@@ -20,21 +17,13 @@ const controlNewRecipe = async function (recipe) {
 
 const controlBookmark = function ({ recipeId, bookmarkElement }) {
   try {
-    if (!model.state) {
-      return;
-    }
-
     const isBookmarked = model.toggleBookmark(recipeId);
     view.renderBookmark({ recipeId, bookmarkElement, isBookmarked });
 
-    if (Array.isArray(model.state.recipe) && model.state.recipe.length > 0) {
-      const updatedRecipe = model.state.recipe.find(
-        (recipe) => recipe.recipe_id === recipeId
-      );
-      if (updatedRecipe) {
-        updatedRecipe.isBookmarked = isBookmarked;
-        view.updateSingleCard(updatedRecipe);
-      }
+    const updatedRecipe = model.getRecipeById(recipeId);
+    if (updatedRecipe) {
+      updatedRecipe.isBookmarked = isBookmarked;
+      view.updateSingleCard(updatedRecipe);
     }
     model.setLocalStorage();
   } catch (err) {
@@ -44,16 +33,11 @@ const controlBookmark = function ({ recipeId, bookmarkElement }) {
 
 const controlPagination = function (page) {
   try {
-    if (!model.state || !model.state.pagination) {
-      return;
-    }
     if (model.setCurrentPage(page)) {
       const paginatedRecipes = model.getPaginatedRecipes();
-      view.renderFood(paginatedRecipes, model.state.recipe.length);
-      view.renderPagination(
-        model.state.pagination.currentPage,
-        model.getTotalPages()
-      );
+      if (!paginatedRecipes) return;
+      view.renderFood(paginatedRecipes, model.getRecipeCount());
+      view.renderPagination(model.getCurrentPage(), model.getTotalPages());
     }
   } catch (err) {
     console.error("Error", err.message);

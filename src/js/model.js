@@ -11,7 +11,6 @@ const state = {
 
 export const searchRecipe = async function (recipeName) {
   try {
-    const key = "4b76c2af-61c8-4d53-8719-f548d774a412";
     if (!recipeName) throw new Error("Recipe name is required");
     const recipeResponse = await fetch(
       `https://forkify-api.herokuapp.com/api/search?q=${encodeURIComponent(
@@ -71,6 +70,18 @@ export const setCurrentPage = function (page) {
   return true;
 };
 
+export const getCurrentPage = function () {
+  return state.pagination ? state.pagination.currentPage : 1;
+};
+
+export const getRecipeById = function (recipeId) {
+  return state.recipe.find((recipe) => recipe.recipe_id === recipeId);
+};
+
+export const getRecipeCount = function () {
+  return state.recipe.length;
+};
+
 export const setLocalStorage = function () {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state.bookmarks));
 };
@@ -79,5 +90,3 @@ export const getLocalStorage = function () {
   const storedBookmarks = JSON.parse(localStorage.getItem(STORAGE_KEY));
   if (Array.isArray(storedBookmarks)) state.bookmarks = storedBookmarks;
 };
-
-export { state }; // Export for debugging (remove after confirming fix)
