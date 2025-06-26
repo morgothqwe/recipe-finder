@@ -36,6 +36,7 @@ const controlBookmark = function ({ recipeId, bookmarkElement }) {
         view.updateSingleCard(updatedRecipe);
       }
     }
+    model.setLocalStorage();
   } catch (err) {
     console.error("Error", err.message);
   }
@@ -60,6 +61,7 @@ const controlPagination = function (page) {
 };
 
 const init = function () {
+  model.getLocalStorage();
   view.addHandlerFindFood(controlNewRecipe);
   view.addHandlerBookmark(controlBookmark);
   view.addHandlerPagination(controlPagination);

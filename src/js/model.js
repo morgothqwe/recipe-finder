@@ -1,3 +1,5 @@
+import { STORAGE_KEY } from "./config";
+
 const state = {
   recipe: [],
   bookmarks: [],
@@ -9,6 +11,7 @@ const state = {
 
 export const searchRecipe = async function (recipeName) {
   try {
+    const key = "4b76c2af-61c8-4d53-8719-f548d774a412";
     if (!recipeName) throw new Error("Recipe name is required");
     const recipeResponse = await fetch(
       `https://forkify-api.herokuapp.com/api/search?q=${encodeURIComponent(
@@ -66,6 +69,15 @@ export const setCurrentPage = function (page) {
   if (page < 1 || page > getTotalPages()) return false;
   state.pagination.currentPage = page;
   return true;
+};
+
+export const setLocalStorage = function () {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state.bookmarks));
+};
+
+export const getLocalStorage = function () {
+  const storedBookmarks = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  if (Array.isArray(storedBookmarks)) state.bookmarks = storedBookmarks;
 };
 
 export { state }; // Export for debugging (remove after confirming fix)
